@@ -7,9 +7,11 @@ import QuizGame from './QuizGame'
 
 const StartGame = () => {
 
+    // create bottom navbar
     const Tab = createBottomTabNavigator()
 
     return (
+        // navbar configuration
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: () => {

@@ -20,6 +20,7 @@ const QuizGame = () => {
         getQuestions();
     }, []);
 
+    // fecth questions from quiz api
     const getQuestions = () => {
         fetch(API_URL)
             .then(response => response.json())
@@ -34,6 +35,7 @@ const QuizGame = () => {
         () => Math.random() - 0.5
         ) */
 
+    // fetch new questions until user has 5 wrong answers
     const nextQuestion = () => {
         wrongAnswers < 5 ? (
             getQuestions()
@@ -69,6 +71,8 @@ const QuizGame = () => {
         nextQuestion()
         /* setIndex(index + 1); */
     }
+
+    // play again function to clear the scores
     const playAgain = () => {
         setRightAnswers(rightAnswers === 0);
         setWrongAnswers(wrongAnswers === 0);
@@ -76,21 +80,13 @@ const QuizGame = () => {
         getQuestions();
     }
 
-    const arr = [wrongAnswer1, wrongAnswer2, wrongAnswer3, correctAnswer]
-    arr.sort(() => Math.random() - 0.5
-    )
-
     return questions.length > 0 ? (
         <SafeAreaView style={styles.container}>
-            <View>
-
-            </View>
             <HTMLView
                 style={styles.question}
                 value={questions[0].question}
             /*  value={questions[index].question} */
             />
-
             <View style={styles.buttons}>
                 <Button
                     title={questions[0].correct_answer}
@@ -159,7 +155,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: '5%',
         marginTop: '10%'
-
     },
     loading: {
         flex: 1,

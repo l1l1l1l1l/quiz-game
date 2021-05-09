@@ -1,18 +1,19 @@
 import {
     StyleSheet, Text, View, TextInput, Button,
-    SafeAreaView, FlatList} from 'react-native';
+    SafeAreaView, FlatList
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as SQLite from 'expo-sqlite';
 
 // initialize database
-const db = SQLite.openDatabase('Highscoresds.db');
+const db = SQLite.openDatabase('highscoresds.db');
 
 const QuizScore = () => {
     const [title, setTitle] = useState('');
     const [scoreArray, setScoreArray] = useState([]);
 
     useEffect(() => {
-        //create sql table
+    // create sql table
         db.transaction(tx => {
             tx.executeSql('create table if not exists item (id integer primary key not null, title text);');
         }, null, updateList);
@@ -27,7 +28,7 @@ const QuizScore = () => {
         )
     }
 
-    // 
+    // delete score by id
     const deleteScore = (id) => {
         db.transaction(tx => {
             tx.executeSql('delete from item where id = ?;', [id]);
@@ -35,9 +36,10 @@ const QuizScore = () => {
         )
     }
 
+    // update scorelist
     const updateList = () => {
         db.transaction(tx => {
-            tx.executeSql('select * from item;', [], (_, { rows }) =>
+            tx.executeSql('select * from item ORDER BY title ASC;', [], (_, { rows }) =>
                 setScoreArray(rows._array)
             );
         });
